@@ -1,8 +1,9 @@
+import { SignUp } from "./Component/SignUp";
 
 function App() {
   return (
-    <div>
-     
+    <div className="font-roboto">
+     <SignUp/>
     </div>
   );
 }
