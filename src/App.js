@@ -1,9 +1,10 @@
-import { SignUp } from "./Component/SignUp";
+import SocailSphereRoutes from "./SocailSphereRoutes";
+
 
 function App() {
   return (
     <div className="font-roboto">
-     <SignUp/>
+     <SocailSphereRoutes/>
     </div>
   );
 }
