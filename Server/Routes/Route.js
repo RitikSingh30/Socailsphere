@@ -3,6 +3,6 @@ const { signup } = require('../Controllers/Signup');
 
 const route = Router();
 
-route.get('/signup',signup);
+route.post('/signup',signup);
 
-module.exports = route;
+module.exports = {route};

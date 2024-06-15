@@ -1,26 +1,33 @@
-exports.signup = function(req,res){
-    const {mobileNo,emailId,userName,password} = req.body ;
+const Profile = require('../Models/Profile');
 
-    if(!mobileNo && !emailId){
-        return res.status(401).json({
-            message:"Mobile No or Email Id is required",
-            success:false,
-        })
-    }
+exports.signup = async function(req,res,next){
+    try{
+        const {MobileNumber,Email} = req.body ;
 
-    if(!userName || !password){
-        return res.status(401).json({
-            message:"All fields are required",
-            success:false,
-        })
-    }
-
-    if(mobileNo){
-        // checking whether duplicat entry exists or not
+        if(!MobileNumber && !Email){
+            return res.status(401).json({
+                message:"Mobile No or Email Id is required",
+                success:false,
+            })
+        }
+        
+        let isProfileExist ;
+        if(MobileNumber) isProfileExist = await Profile.findOne({MobileNumber});
+        else isProfileExist = await Profile.findOne({Email});
 
         // if exist 
-    }
-    else{
-        
+        if(isProfileExist){
+            return res.status(409).json({
+                message:`Profile with this ${MobileNumber ? "Mobile Number" : "Email Id"} already exist`,
+                success:false,
+            })
+        }
+
+        next();
+    }catch(error){
+        return res.status(500).json({
+            success:false,
+            message:"Internal Server Error"
+        })
     }
 }
