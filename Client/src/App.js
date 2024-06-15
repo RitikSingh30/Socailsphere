@@ -1,4 +1,4 @@
-import SocailSphereRoutes from "./SocailSphereRoutes";
+import SocailSphereRoutes from "./Route/SocailSphereRoutes";
 
 
 function App() {
