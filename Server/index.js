@@ -2,11 +2,17 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const { route } = require('./Routes/Route');
 const { DBConnection } = require('./Utiles/DBConnection');
+const cors = require('cors');
 require('dotenv').config() ;
 
 // Created express server
 const app = express();
 const PORT = process.env.PORT || 5000 ;
+
+// cors establision
+app.use(cors({
+    origin:"*",
+}))
 
 // Parsing the data 
 app.use(bodyParser.urlencoded({extended:false}));
