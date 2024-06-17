@@ -1,8 +1,8 @@
 export const SignupInput = [
     {
         Id:1,
-        Name:'MobileNoEmailId',
-        Placeholder:'Mobile Number or Email',
+        Name:'Email',
+        Placeholder:'Email',
         Type:'text',
     },
     {

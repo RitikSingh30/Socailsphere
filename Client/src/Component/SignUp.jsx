@@ -5,12 +5,27 @@ import { Btn } from "./Buttons/Btn";
 import "../CSS/Signup.css";
 import { useForm } from "react-hook-form";
 import { RxCrossCircled } from "react-icons/rx";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { SIGNUP_VERIFICATION_URL } from "../API_Endpoint/SignupAPI";
+import axios from 'axios';
 
 export const SignUp = () => {
   const { register, handleSubmit } = useForm();
+  const navigate = useNavigate();
 
-  const onSubmit = () => {};
+  const onSubmit = async(data) => {
+
+    try{
+      const response = await axios.post(SIGNUP_VERIFICATION_URL,data);
+      if(response?.data?.success){
+        navigate('/otp',{state:data});
+      }
+
+    }catch(error){
+      
+    }
+    console.log(data);
+  };
 
   return (
     <div className="flex flex-col justify-center items-center h-screen gap-y-[0.5rem]">
@@ -31,14 +46,14 @@ export const SignUp = () => {
           {SignupInput?.map((data) => (
             <div
               key={data?.Id}
-              className="flex items-center relative border-[#DBDBDB] border-[1px] bg-[#FAFAFA] pr-[0.5rem]"
+              className="flex items-center relative border-[#DBDBDB] border-[1px] bg-[#FAFAFA] pr-[0.5rem] rounded-md"
             >
               <input
                 type={data?.Type}
                 name={data?.Name}
                 required
                 {...register(`${data?.Name}`, { required: true })}
-                className="bg-[#FAFAFA] leading-[2.25rem] rounded-sm outline-none px-[0.5rem] w-full h-[3.4rem] pt-[0.6rem]"
+                className="bg-[#FAFAFA] leading-[2.25rem] outline-none px-[0.5rem] w-full h-[3.4rem] pt-[0.6rem]"
               />
               <span className="floating-label text-[0.75rem] text-[#737373]">
                 {data?.Placeholder}
@@ -50,7 +65,7 @@ export const SignUp = () => {
         <div className="text-[0.75rem] -mt-[1.5rem] flex flex-col gap-y-[1rem]">
           <p className="text-[#737373] font-normal text-center">
             People who use our service may have uploaded your contact
-            information to Instagram.{" "}
+            information to Socailsphere.{" "}
             <span className="text-[#385898] cursor-pointer">Learn more</span>
           </p>
           <p className="text-[#737373] font-normal text-center">
