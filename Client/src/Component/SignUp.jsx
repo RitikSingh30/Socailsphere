@@ -8,6 +8,7 @@ import { RxCrossCircled } from "react-icons/rx";
 import { Link, useNavigate } from "react-router-dom";
 import { SIGNUP_VERIFICATION_URL } from "../API_Endpoint/SignupAPI";
 import axios from 'axios';
+import toast from "react-hot-toast";
 
 export const SignUp = () => {
   const { register, handleSubmit } = useForm();
@@ -18,13 +19,13 @@ export const SignUp = () => {
     try{
       const response = await axios.post(SIGNUP_VERIFICATION_URL,data);
       if(response?.data?.success){
+        toast.success(response?.data?.message);
         navigate('/otp',{state:data});
       }
 
     }catch(error){
-      
+      toast.error(error?.response?.data?.message);
     }
-    console.log(data);
   };
 
   return (

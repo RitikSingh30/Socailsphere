@@ -1,19 +1,36 @@
 import React from 'react'
 import lockicon from '../Asserts/lockicon.png'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import "../CSS/Signup.css";
 import { useForm } from 'react-hook-form';
 import { Btn } from './Buttons/Btn';
+import axios from 'axios';
+import { SIGNUP_URL } from '../API_Endpoint/SignupAPI';
+import toast from 'react-hot-toast';
 
 export const Otp = () => {
+    const navigate = useNavigate();
     const { register, handleSubmit } = useForm();
     const location = useLocation();
     const userData = location.state ;
     const userEmail = userData?.Email.substring(0,5);
-    console.log(userData)
+
+    const onsubmit = async(data) => {
+        try{
+            userData.otp = data.otp ;
+            const response = await axios.post(SIGNUP_URL,userData);
+            if(response?.data?.success){
+                toast.success(response?.data?.message);
+                navigate('/Welcome');
+              }
+        }catch(error){
+            toast.error(error?.response?.data?.message);
+        }
+    }
+
   return (
     <div className='flex items-center justify-center h-screen'>
-        <div className='border-[1px] border-[#DBDBDB] flex flex-col items-center pt-[3rem] p-[2rem] max-w-[400px]'>
+        <form onSubmit={handleSubmit(onsubmit)} className='border-[1px] border-[#DBDBDB] flex flex-col items-center pt-[3rem] p-[2rem] max-w-[400px]'>
             <img src={lockicon} loading='lazy' alt='icon'/>
             <p className='text-center mt-[1.5rem]'>Enter the code that we sent via E-mail
             to your mobile or desktop : {userEmail}********gmail.com</p>
@@ -34,7 +51,7 @@ export const Otp = () => {
                 <p>Didn't get a security code?</p>
                 <p className='text-[#0095F6]'>Send code via SMS instead</p>
             </div>
-        </div>
+        </form>
     </div>
   )
 }
