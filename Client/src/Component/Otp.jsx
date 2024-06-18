@@ -7,6 +7,7 @@ import { Btn } from './Buttons/Btn';
 import axios from 'axios';
 import { SIGNUP_URL } from '../API_Endpoint/SignupAPI';
 import toast from 'react-hot-toast';
+import { SEND_OTP} from '../API_Endpoint/SendOtp';
 
 export const Otp = () => {
     const navigate = useNavigate();
@@ -23,6 +24,17 @@ export const Otp = () => {
                 toast.success(response?.data?.message);
                 navigate('/Welcome');
               }
+        }catch(error){
+            toast.error(error?.response?.data?.message);
+        }
+    }
+
+    const sendOtpAgain = async() => {
+        try{
+            const response = await axios.post(SEND_OTP,userData);
+            if(response?.data?.success){
+                toast.success(response?.data?.message);
+            }
         }catch(error){
             toast.error(error?.response?.data?.message);
         }
@@ -49,7 +61,7 @@ export const Otp = () => {
             <Btn content={"Confirm"} xPadding={"px-[6.738rem] rounded-[8px]"} margin={"mt-[1rem]"} width={"w-[90%]"}/>
             <div className='mt-[1.3rem]'>
                 <p>Didn't get a security code?</p>
-                <p className='text-[#0095F6]'>Send code via SMS instead</p>
+                <p onClick={sendOtpAgain} className='text-[#0095F6] text-center cursor-pointer'>Send code again</p>
             </div>
         </form>
     </div>

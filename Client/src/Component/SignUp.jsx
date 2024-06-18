@@ -1,16 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import socailsphereNameLogo from "../Asserts/Logo/socailsphereNameLogo.svg";
 import { SignupInput } from "../Data/Signup/SignupInput";
 import { Btn } from "./Buttons/Btn";
 import "../CSS/Signup.css";
 import { useForm } from "react-hook-form";
-import { RxCrossCircled } from "react-icons/rx";
 import { Link, useNavigate } from "react-router-dom";
 import { SIGNUP_VERIFICATION_URL } from "../API_Endpoint/SignupAPI";
 import axios from 'axios';
 import toast from "react-hot-toast";
+import { IoEyeOutline , IoEyeOffOutline} from "react-icons/io5";
 
 export const SignUp = () => {
+  const [showPassword,setShowPassword] = useState(false);
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
 
@@ -50,7 +51,7 @@ export const SignUp = () => {
               className="flex items-center relative border-[#DBDBDB] border-[1px] bg-[#FAFAFA] pr-[0.5rem] rounded-md"
             >
               <input
-                type={data?.Type}
+                type={`${data?.Type === 'password' && !showPassword ? 'password' : 'text'}`}
                 name={data?.Name}
                 required
                 {...register(`${data?.Name}`, { required: true })}
@@ -59,7 +60,10 @@ export const SignUp = () => {
               <span className="floating-label text-[0.75rem] text-[#737373]">
                 {data?.Placeholder}
               </span>
-              <RxCrossCircled className="text-red-500 text-[1.5rem]" />
+              {
+                data?.Placeholder === 'Password' ? (showPassword ? <IoEyeOutline onClick={() => setShowPassword(!showPassword)} className="cursor-pointer"/> : 
+                <IoEyeOffOutline  onClick={() => setShowPassword(!showPassword)}  className="cursor-pointer"/>) : null
+              }
             </div>
           ))}
         </div>
