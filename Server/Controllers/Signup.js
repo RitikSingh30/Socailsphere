@@ -1,14 +1,11 @@
 const Profile = require('../Models/Profile');
 const bcrypt = require('bcrypt-nodejs');
-const { SignupOtp } = require('../Helper/SignupOtp');
 const Otp = require('../Models/OTP');
-const { signupOtpTemplate } = require('../MailTemplate/signupOtpTemplate');
-const { saveOtp } = require('../Helper/SaveOtp');
-const otpGenerator = require('otp-generator');
+const { SendOtp } = require('./SendOtp');
 
 exports.singupVerification = async function(req,res){
     try{
-        const {Email} = req.body ;
+        const {Email,UserName} = req.body ;
 
         if(!Email){
             return res.status(401).json({
@@ -17,7 +14,7 @@ exports.singupVerification = async function(req,res){
             })
         }
         
-        let isProfileExist = await Profile.findOne({Email});
+        let isProfileExist = await Profile.findOne({Email:Email.toLowerCase()});
 
         // if exist 
         if(isProfileExist){
@@ -27,26 +24,26 @@ exports.singupVerification = async function(req,res){
             })
         }
 
-        const OTP = otpGenerator.generate(6, { upperCaseAlphabets: false, specialChars: false ,lowerCaseAlphabets: false});
-
-        const sendmail = await SignupOtp({to:Email,mailBody:signupOtpTemplate(OTP)});
-        
-        if(!sendmail){
+        if(!UserName){
             return res.status(401).json({
-                success:false,
-                message:'Otp send fail',
+                message:'Username is required',
+                success:false
             })
         }
 
-        const isOtpSave = await saveOtp({Email,otp:OTP});
+        let isUserNameExist = await Profile.findOne({UserName:UserName.toLowerCase()});
 
-        return res.status(200).json({
-            success:true,
-            message:'Otp send successfull',
-        })
+        // if the username is taken by someone else 
+        if(isUserNameExist){
+            return res.status(409).json({
+                message:"Username already taken",
+                success:false,
+            })
+        }
+
+        return SendOtp(req,res);
 
     }catch(error){
-        console.log(error);
         return res.status(500).json({
             success:false,
             message:"Internal Server Error"
@@ -83,7 +80,7 @@ exports.singup = async function(req,res){
 
         // Encrypting the password 
         const hashPassword = bcrypt.hashSync(Password, bcrypt.genSaltSync(8), null);
-        const userDoc = new Profile({Email,FullName,Password:hashPassword,UserName});
+        const userDoc = new Profile({Email:Email.toLowerCase(),FullName,Password:hashPassword,UserName:UserName.toLowerCase()});
         await userDoc.save();
 
         return res.status(200).json({
@@ -91,7 +88,6 @@ exports.singup = async function(req,res){
             message:'Signup Successfull, Welcome!!'
         });
     }catch(error){
-        console.log(error);
         return res.status(500).json({
             success:false,
             message:"Internal server error"
