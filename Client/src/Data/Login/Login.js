@@ -1,8 +1,8 @@
 export const LoginData =[
     {
         Id:1,
-        Name:'MobileNoEmailIdUserName',
-        Placeholder:'Phone number, username, or email',
+        Name:'EmailIdUserName',
+        Placeholder:'Username, or email',
         Type:'text',
     },
     {

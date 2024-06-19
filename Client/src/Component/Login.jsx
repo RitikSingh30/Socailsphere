@@ -20,7 +20,7 @@ export default function Login() {
       const response = await axios.post(LOGIN_REQUEST, data);
       if (response?.data?.success) {
         toast.success(response?.data?.message);
-        navigate("/");
+        navigate("/Welcome");
       }
     } catch (error) {
       toast.error(error?.response?.data?.message);
@@ -48,12 +48,12 @@ export default function Login() {
             >
               <input
                 type={
-                  data.Type === "password" && !showPassword
+                  data.Name === "Password" && !showPassword
                     ? "password"
                     : "text"
                 }
-                name={data.Name}
-                {...register(data.Name, { required: true })}
+                name={data?.Name}
+                {...register(data?.Name, { required: true })}
                 required
                 className="bg-[#FAFAFA] leading-[2.25rem] outline-none px-[0.5rem] w-full h-[3.4rem] pt-[0.6rem]"
               />

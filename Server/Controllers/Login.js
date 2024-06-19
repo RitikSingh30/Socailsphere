@@ -3,11 +3,9 @@ const bcrypt = require('bcrypt-nodejs');
 
 exports.loginVerification = async function (req, res) {
     try {
-        const { Email, Password } = req.body;
-        console.log("Received Email:", Email);
-        console.log("Received Password:", Password);
+        const { EmailIdUserName , Password } = req.body;
         
-        if (!Email || !Password) {
+        if (!EmailIdUserName || !Password) {
             return res.status(401).json({
                 success: false,
                 message: "All Fields are required"
@@ -15,15 +13,18 @@ exports.loginVerification = async function (req, res) {
         }
 
         
-        let userDoc = await Profile.findOne({ Email: Email.toLowerCase() });
+        let findUserByEmail = await Profile.findOne({ Email: EmailIdUserName.toLowerCase() });
+        let findUserByUserName = await Profile.findOne({ UserName: EmailIdUserName.toLowerCase() });
 
      
-        if (!userDoc) {
+        if (!findUserByEmail && !findUserByUserName) {
             return res.status(401).json({
                 success: false,
                 message: "Invalid Credentials"
             });
         }
+
+        const userDoc = (findUserByEmail ? findUserByEmail : findUserByUserName);
 
         // Compare hashed password
         const isPasswordMatch = bcrypt.compareSync(Password, userDoc.Password);

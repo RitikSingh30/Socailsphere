@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import lockicon from '../Asserts/lockicon.png'
 import { useLocation, useNavigate } from 'react-router-dom'
 import "../CSS/Signup.css";
@@ -8,8 +8,10 @@ import axios from 'axios';
 import { SIGNUP_URL } from '../API_Endpoint/SignupAPI';
 import toast from 'react-hot-toast';
 import { SEND_OTP} from '../API_Endpoint/SendOtp';
+import { IoEyeOutline , IoEyeOffOutline} from "react-icons/io5";
 
 export const Otp = () => {
+    const [showPassword,setShowPassword] = useState(false);
     const navigate = useNavigate();
     const { register, handleSubmit } = useForm();
     const location = useLocation();
@@ -46,9 +48,9 @@ export const Otp = () => {
             <img src={lockicon} loading='lazy' alt='icon'/>
             <p className='text-center mt-[1.5rem]'>Enter the code that we sent via E-mail
             to your mobile or desktop : {userEmail}********gmail.com</p>
-            <div className="relative border-[#DBDBDB] border-[1px] bg-[#FAFAFA] pr-[0.5rem] rounded-md mt-[1rem] w-[90%]">
+            <div className="relative border-[#DBDBDB] border-[1px] bg-[#FAFAFA] pr-[0.5rem] rounded-md mt-[1rem] w-[90%] flex items-center">
               <input
-                type="password"
+                type={`${!showPassword ? 'password' : 'text'}`}
                 name="otp"
                 required
                 {...register("otp", { required: true })}
@@ -57,6 +59,10 @@ export const Otp = () => {
               <span className="floating-label text-[0.75rem] text-[#737373]">
                 Security Code
               </span>
+              {
+                showPassword ? <IoEyeOutline onClick={() => setShowPassword(!showPassword)} className="cursor-pointer"/> : 
+                <IoEyeOffOutline  onClick={() => setShowPassword(!showPassword)}  className="cursor-pointer"/>
+              }
             </div>
             <Btn content={"Confirm"} xPadding={"px-[6.738rem] rounded-[8px]"} margin={"mt-[1rem]"} width={"w-[90%]"}/>
             <div className='mt-[1.3rem]'>
