@@ -39,7 +39,7 @@ export const SidebarData = [
         Name:"Create",
     },
     {
-        Id:4,
+        Id:6,
         Icon:<div></div>,
         Name:"Profile",
         
