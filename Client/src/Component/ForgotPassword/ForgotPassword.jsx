@@ -3,10 +3,12 @@ import Lock_Image from "../../Asserts/Button@3x.png";
 import { Btn } from "../Buttons/Btn";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 import { Forgot_Password_Api } from "../../API_Endpoint/ForgotPassword";
 import { useForm } from "react-hook-form";
 
 const ForgotPassword = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -18,6 +20,7 @@ const ForgotPassword = () => {
       const response = await axios.post(Forgot_Password_Api, data);
       if (response?.data?.success) {
         toast.success(response?.data?.message);
+        navigate("/Enter-Otp", { state: data });
       }
     } catch (error) {
       toast.error(error?.response?.data?.message);

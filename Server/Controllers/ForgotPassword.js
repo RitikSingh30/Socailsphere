@@ -1,5 +1,5 @@
 const Profile = require('../Models/Profile');
-const SendOtp = require('./SendOtp'); 
+const {SendOtp} = require('./SendOtp'); 
 
 exports.forgotPassword = async function (req, res) {
   try {
