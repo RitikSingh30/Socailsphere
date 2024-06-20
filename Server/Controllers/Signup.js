@@ -41,7 +41,7 @@ exports.singupVerification = async function(req,res){
             })
         }
 
-        return SendOtp(req,res);
+        return await SendOtp(req,res);
 
     }catch(error){
         return res.status(500).json({
