@@ -3,6 +3,7 @@ const { singupVerification, singup } = require('../Controllers/Signup');
 const { SendOtp } = require('../Controllers/SendOtp');
 const { loginVerification } = require('../Controllers/Login');
 const {forgotPassword } = require('../Controllers/ForgotPassword');
+const { VerifyOtp } = require('../Controllers/VerifyOtp');
 const route = Router();
 
 route.post('/signupVerification',singupVerification);
@@ -10,5 +11,6 @@ route.post('/signup',singup);
 route.post('/sendOtp',SendOtp);
 route.post('/login',loginVerification);
 route.post('/forgotPassword',forgotPassword);
+route.post('/VerifyOtp',VerifyOtp);
 
 module.exports = {route};
