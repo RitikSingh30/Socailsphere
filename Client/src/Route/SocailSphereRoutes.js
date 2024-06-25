@@ -7,6 +7,7 @@ import { WelcomeSection } from '../Sections/WelcomeSection'
 import ForgotPassword from '../Component/ForgotPassword/ForgotPassword'
 import EnterOtp from '../Component/ForgotPassword/EnterOtp'
 import ResetPassword from '../Component/ForgotPassword/ResetPassword'
+import SuccesfulPasswordReset from '../Component/ForgotPassword/SuccesfulPasswordReset'
 
 export default function SocailSphereRoutes() {
   return (
@@ -20,6 +21,7 @@ export default function SocailSphereRoutes() {
         <Route path='/forgot-password' element={<ForgotPassword/>}/>
         <Route path='/Enter-Otp' element={<EnterOtp/>}/>
         <Route path='/reset-password' element={<ResetPassword/>}/>
+        <Route path='/password-change-successful' element={<SuccesfulPasswordReset/>}/>
        </Routes>
     </div>
   )

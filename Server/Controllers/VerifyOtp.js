@@ -3,8 +3,6 @@ const Otp = require('../Models/OTP');
 exports.VerifyOtp = async function (req, res) {
   try {
     const { Email, Otp: userOtp } = req.body;
-    console.log(userOtp)
-    console.log(Email);
 
     let otpDocument = await Otp.findOne({ Email }).sort({ 'OTP.createdAt': -1 }).select({ OTP: { $slice: -1 } });
 

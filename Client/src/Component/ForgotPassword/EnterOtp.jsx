@@ -40,7 +40,7 @@ const EnterOtp = () => {
       });
       if (response?.data?.success) {
         toast.success(response?.data?.message);
-        navigate("/reset-password");
+        navigate("/reset-password",{state:userData});
       }
     } catch (error) {
       toast.error(error?.response?.data?.message);
