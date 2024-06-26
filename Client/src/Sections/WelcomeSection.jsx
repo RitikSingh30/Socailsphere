@@ -30,6 +30,7 @@ export const WelcomeSection = () => {
             <div className='flex gap-x-[0.5rem] cursor-pointer items-center'>
                 <RxHamburgerMenu />
                 <p>More</p>
+                
             </div>
         </div>
     </div>
