@@ -17,7 +17,7 @@ export const WelcomeSection = () => {
         {/* SideBar  */}
         <div className='flex flex-col gap-y-[8rem] pl-[1rem] pt-[1rem] h-screen'>
             <img src={socailspherelogo} loading='lazy' alt='Logo' className='w-[9rem]'/>
-            <div className='-mt-[6rem] flex flex-col gap-y-[1.5rem] flex-grow'>
+            <div className='-mt-[6rem] flex flex-col gap-y-[2.5rem] grow'>
                 {
                     SidebarData?.map((data) => (
                         <div onClick={() => changeActiveSection(data?.Id - 1)} key={data?.Id} className='flex gap-x-[0.5rem] cursor-pointer items-center'>

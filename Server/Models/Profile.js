@@ -17,7 +17,28 @@ const ProfileSchema = new mongoose.Schema({
         type:String,
         required:true
     },
+    Bio:{
+        type:String,
+    },
+    Post:[
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:'Post'
+        }
+    ],
+    Followers:[
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:'Profile'
+        },
+    ],
+    Following:[
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:'Profile'
+        }
+    ]
 
 })
-
+            
 module.exports = mongoose.model('Profile',ProfileSchema);
