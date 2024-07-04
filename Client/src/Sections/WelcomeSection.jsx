@@ -8,6 +8,7 @@ import { GET_USER_DATA } from '../API_Endpoint/GetUserData';
 import { Link, useLocation } from 'react-router-dom';
 import toast from 'react-hot-toast'
 
+import StoriesAndHighlights from "../Data/StoriesAndHighlights/StoriesAndHighlights";
 export const WelcomeSection = () => {
 
     const [sideBarActive, setSideBarActive] = useState([true,false,false,false,false,false]);
@@ -74,11 +75,14 @@ export const WelcomeSection = () => {
                 </div>
             </div>
         </div>
+        <div>
+            <StoriesAndHighlights />
+        </div>
 
         {
             showInitialProfileSetup && <InitialProfileSetup userCompleteData={userCompleteData} setShowInitialProfileSetup={setShowInitialProfileSetup}
             Email={userData?.Email} setUserCompleteData={setUserCompleteData}/>
         }
     </div>
-  )
-}
+  );
+};
