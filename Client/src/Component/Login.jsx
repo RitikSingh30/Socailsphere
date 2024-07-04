@@ -16,15 +16,19 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
 
   const onSubmit = async (data) => {
+    const toastId = toast.loading('Loading...');
     try {
       const response = await axios.post(LOGIN_REQUEST, data);
       if (response?.data?.success) {
+        toast.dismiss(toastId);
         toast.success(response?.data?.message);
-        navigate("/Welcome");
+        navigate("/Welcome",{state:{Email:data?.EmailIdUserName}});
       }
     } catch (error) {
+      toast.dismiss(toastId);
       toast.error(error?.response?.data?.message);
     }
+    toast.dismiss(toastId)
   };
 
   return (

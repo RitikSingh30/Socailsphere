@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+require('dotenv').config() ;
 
 const ProfileSchema = new mongoose.Schema({
     UserName:{
@@ -37,7 +38,15 @@ const ProfileSchema = new mongoose.Schema({
             type:mongoose.Schema.Types.ObjectId,
             ref:'Profile'
         }
-    ]
+    ],
+    ProfilePicture:{
+        type:String,
+        default:process.env.SERVER_URL + '/Images/defaultprofilepic.png'
+    },
+    Gender:{
+        type:String,
+        enum:["Male","Female"]
+    }
 
 })
             

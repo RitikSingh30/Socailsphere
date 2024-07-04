@@ -16,15 +16,19 @@ const ForgotPassword = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
+    const toastId = toast.loading('Loading...');
     try {
       const response = await axios.post(Forgot_Password_Api, data);
       if (response?.data?.success) {
+        toast.dismiss(toastId);
         toast.success(response?.data?.message);
         navigate("/Enter-Otp", { state: data });
       }
     } catch (error) {
+      toast.dismiss(toastId);
       toast.error(error?.response?.data?.message);
     }
+    toast.dismiss(toastId);
   };
 
   return (

@@ -20,31 +20,39 @@ const EnterOtp = () => {
   } = useForm();
 
   const ResendOtp = async () => {
+    const toastId = toast.loading('Loading...');
     try {
       const response = await axios.post(SEND_OTP, {
         Email: userData.Email,
       });
       if (response?.data?.success) {
+        toast.dismiss(toastId);
         toast.success(response?.data?.message);
       }
     } catch (error) {
+      toast.dismiss(toastId);
       toast.error(error?.response?.data?.message);
     }
+    toast.dismiss(toastId);
   };
 
   const onSubmit = async (data) => {
+    const toastId = toast.loading('Loading...');
     try {
       const response = await axios.post(Verify_Otp_Api, {
         Email: userData.Email,
         Otp: data.Otp,
       });
       if (response?.data?.success) {
+        toast.dismiss(toastId);
         toast.success(response?.data?.message);
         navigate("/reset-password",{state:userData});
       }
     } catch (error) {
+      toast.dismiss(toastId);
       toast.error(error?.response?.data?.message);
     }
+    toast.dismiss(toastId);
   };
 
   return (

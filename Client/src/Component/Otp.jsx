@@ -19,27 +19,35 @@ export const Otp = () => {
     const userEmail = userData?.Email.substring(0,5);
 
     const onsubmit = async(data) => {
+      const toastId = toast.loading('Loading...');
         try{
             userData.otp = data.otp ;
             const response = await axios.post(SIGNUP_URL,userData);
             if(response?.data?.success){
-                toast.success(response?.data?.message);
-                navigate('/Welcome');
-              }
-        }catch(error){
+              toast.dismiss(toastId);
+              toast.success(response?.data?.message);
+              navigate('/Welcome',{state:{Email:userData?.Email,showInitialProfileSetup:true}});
+            }
+          }catch(error){
+            toast.dismiss(toastId);
             toast.error(error?.response?.data?.message);
-        }
+          }
+        toast.dismiss(toastId);
     }
 
     const sendOtpAgain = async() => {
-        try{
-            const response = await axios.post(SEND_OTP,userData);
-            if(response?.data?.success){
-                toast.success(response?.data?.message);
-            }
-        }catch(error){
-            toast.error(error?.response?.data?.message);
+      const toastId = toast.loading('Loading...');
+      try{
+        const response = await axios.post(SEND_OTP,userData);
+        if(response?.data?.success){
+          toast.dismiss(toastId);
+          toast.success(response?.data?.message);
         }
+        }catch(error){
+          toast.dismiss(toastId);
+          toast.error(error?.response?.data?.message);
+        }
+      toast.dismiss(toastId);
     }
 
   return (

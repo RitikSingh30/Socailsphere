@@ -19,6 +19,7 @@ const ResetPassword = () => {
   const userData = location.state ;
 
   const onsubmit = async(data) => {
+    const toastId = toast.loading('Loading...');
     try{
       data.Email = userData.Email ;
 
@@ -29,14 +30,17 @@ const ResetPassword = () => {
       const response = await axios.post(RESET_PASSWORD,data);
       console.log(response)
       if (response?.data?.success) {
+        toast.dismiss(toastId);
         toast.success(response?.data?.message);
         navigate('/password-change-successful');
         
       }
     }catch(error){
       console.log(error)
+      toast.dismiss(toastId);
       toast.error(error?.response?.data?.message);
     }
+    toast.dismiss(toastId);
   }
 
   return <div className="flex justify-center items-center h-screen">

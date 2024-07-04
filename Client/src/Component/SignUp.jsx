@@ -16,15 +16,19 @@ export const SignUp = () => {
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
+    const toastId = toast.loading('Loading...');
     try {
       const response = await axios.post(SIGNUP_VERIFICATION_URL, data);
       if (response?.data?.success) {
+        toast.dismiss(toastId);
         toast.success(response?.data?.message);
         navigate("/otp", { state: data });
       }
     } catch (error) {
+      toast.dismiss(toastId);
       toast.error(error?.response?.data?.message);
     }
+    toast.dismiss(toastId);
   };
 
   return (
