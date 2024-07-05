@@ -2,7 +2,8 @@ const Profile = require('../Models/Profile')
 
 exports.GetUserData = async(req,res) => {
     try{
-        const {Email} = req.query ;
+        const {Email,allData} = req.query ;
+       
         if(!Email){
             return res.status(409).json({
                 success:false,
@@ -10,7 +11,9 @@ exports.GetUserData = async(req,res) => {
             })
         }
 
-        const userData = await Profile.findOne({Email:Email.toLowerCase()}).select('-Password -__v -_id');
+        let userData ;
+        if(allData) userData = await Profile.findOne({Email:Email.toLowerCase()}).select('-Password -__v -_id');
+        else userData = await Profile.findOne({Email:Email.toLowerCase()}).select('-Password -__v -_id -Post -Followers -Following');
 
         if(!userData){
             return res.status(409).json({
