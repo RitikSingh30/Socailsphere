@@ -5,8 +5,11 @@ import axios from 'axios'
 import { UPDATE_USER_PROFILE_INFO } from '../API_Endpoint/UpdateUserProfile';
 import { RxCross2 } from "react-icons/rx";
 import toast from 'react-hot-toast';
+import { useDispatch } from 'react-redux';
+import { hide } from '../Slices/showEditProfileSlice';
 
-export const InitialProfileSetup = ({userCompleteData,setShowInitialProfileSetup,Email,setUserCompleteData}) => {
+export const InitialProfileSetup = ({userCompleteData,Email,setUserCompleteData}) => {
+    const dispatch = useDispatch();
     const [fullName, setFullName] = useState('');
     const [selectedFile, setSelectedFile] = useState(null);
     const { register, handleSubmit } = useForm();
@@ -67,7 +70,9 @@ export const InitialProfileSetup = ({userCompleteData,setShowInitialProfileSetup
         <form onSubmit={handleSubmit(onsubmit)} className='border-[2px] border-[#000000] p-[1rem] rounded-md flex flex-col gap-y-[5rem]'>
             <div className='flex items-center justify-between'>
                 <h2 className='text-[1.875rem] font-semibold'>Edit Profile</h2>
-                <RxCross2 onClick={() => setShowInitialProfileSetup(false)} className='text-[1.5rem] cursor-pointer'/>
+                <RxCross2 onClick={() => {
+                    dispatch(hide());
+                }} className='text-[1.5rem] cursor-pointer'/>
             </div>
             <div className='-mt-[4rem] flex flex-col gap-y-[0.5rem]'>
                 <div className='bg-[#CDCDCD] flex items-center px-[0.5rem] pr-[1rem] py-[0.5rem] rounded-[1rem] gap-x-[1rem]'>
