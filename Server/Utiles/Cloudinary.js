@@ -1,5 +1,4 @@
-// import { v2 as cloudinary } from 'cloudinary';
-const cloudinary = require('cloudinary').v2;
+import { v2 as cloudinary } from 'cloudinary';
 
 // Configuration
 cloudinary.config({ 
@@ -15,17 +14,21 @@ const opts = {
     folder: "Socailsphere"
 }
 
-module.exports = (image) => { // image = base64
+// Upload media to cloudinary
+export const cloudinaryUpload = (image) => { // image = base64
     return new Promise((resolve,reject) => {
         cloudinary.uploader.upload(image,opts,(error,result) => {
             if(result && result.secure_url){
-                // console.log(result.secure_url);
-                return resolve(result.secure_url);
+                return resolve(result);
             }
-            // console.log(error.message);
             return reject({message:error.message});
         });
     });
 };
+
+// delete media from cloudinary
+export const cloudinaryDelete = async(id) => {
+    await cloudinary.uploader.destroy(id);
+}
    
 

@@ -1,1 +1,14 @@
 
+/* dropzone css  */
+.dropzone .dz-preview .dz-progress {
+    z-index: 0;
+}
+
+.dropzone{
+    border: none !important;
+}
+
+/* Post creation caption section  */
+.smoothWidthIncrease{
+    transition: width 0.5s;
+}

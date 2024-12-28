@@ -1,7 +1,8 @@
-const Profile = require('../Models/Profile');
-const bcrypt = require('bcrypt-nodejs');
+import Profile from '../Models/Profile.js';
+import bcrypt from 'bcrypt-nodejs';
+import jwt from 'jsonwebtoken';
 
-exports.loginVerification = async function (req, res) {
+export const loginVerification = async function (req, res) {
     try {
         const { EmailIdUserName , Password } = req.body;
         
@@ -37,10 +38,16 @@ exports.loginVerification = async function (req, res) {
             });
         }
 
+        // Creating JWT Token 
+        const token = jwt.sign({Email: userDoc.Email}, process.env.JWT_SECRET_KEY, {
+            expiresIn: '7d',
+        })
+        
         // If credentials are correct, send success response
         return res.status(200).json({
             success: true,
-            message: "Login Successful"
+            message: "Login Successful",
+            token 
         });
 
     } catch (error) {

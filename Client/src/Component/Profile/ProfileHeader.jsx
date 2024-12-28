@@ -1,7 +1,7 @@
 import React from 'react'
 import { TfiSettings } from "react-icons/tfi";
 import { useDispatch } from 'react-redux';
-import { show } from '../../Slices/showEditProfileSlice';
+import { show } from '../../Slices/ShowEditProfileSlice';
 
 export const ProfileHeader = ({userCompleteData}) => {
     const dispatch = useDispatch();
@@ -9,7 +9,7 @@ export const ProfileHeader = ({userCompleteData}) => {
   return (
     <div className='flex gap-x-[5rem] mt-[2rem] items-center'>
         {/* User profile  */}
-        <img src={userCompleteData?.ProfilePicture} alt='Profile' loading='lazy' className='w-[5rem] rounded-full'/>
+        <img src={userCompleteData?.ProfilePicture} alt='Profile' loading='lazy' className='w-[9rem] h-[9rem] border border-black rounded-full'/>
 
         {/* User Detail  */}
         <div className='flex flex-col gap-y-[1rem]'>

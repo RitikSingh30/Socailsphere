@@ -1,6 +1,6 @@
-const Otp = require('../Models/OTP');
+import Otp from '../Models/OTP.js';
 
-exports.saveOtp = async function({Email,otp}){
+export const saveOtp = async function({Email,otp}){
     try{
 
         let existingOtpDoc = await Otp.findOne({Email});

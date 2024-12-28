@@ -1,0 +1,2 @@
+const GET_POST_TO_DISPLAY_AT_HOME_PAGE = process.env.REACT_APP_BASE_URL + '/getPostToDisplayAtHomePage'
+export{GET_POST_TO_DISPLAY_AT_HOME_PAGE}

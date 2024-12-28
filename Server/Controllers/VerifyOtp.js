@@ -1,6 +1,6 @@
-const Otp = require('../Models/OTP'); 
+import Otp from '../Models/OTP.js';
 
-exports.VerifyOtp = async function (req, res) {
+export const VerifyOtp = async function (req, res) {
   try {
     const { Email, Otp: userOtp } = req.body;
 

@@ -1,8 +1,9 @@
-const Profile = require('../Models/Profile')
+import Profile from '../Models/Profile.js';
 
-exports.GetUserData = async(req,res) => {
+export const GetUserData = async(req,res) => {
     try{
-        const {Email,allData} = req.query ;
+        const {allData,getDataForDifferentUser} = req.query ;
+        const {Email} = req ;
        
         if(!Email){
             return res.status(409).json({
@@ -12,9 +13,18 @@ exports.GetUserData = async(req,res) => {
         }
 
         let userData ;
-        if(allData) userData = await Profile.findOne({Email:Email.toLowerCase()}).select('-Password -__v -_id');
-        else userData = await Profile.findOne({Email:Email.toLowerCase()}).select('-Password -__v -_id -Post -Followers -Following');
-
+        // Getting profile Data for the different user
+        if(getDataForDifferentUser){
+            if(allData) userData = await Profile.findOne({UserName:getDataForDifferentUser.toLowerCase()}).select('-Password -__v -_id')
+                .populate('Post');
+            else userData = await Profile.findOne({UserName:getDataForDifferentUser.toLowerCase()})
+                .select('-Password -__v -_id -Post -Followers -Following');
+        }else{
+            if(allData) userData = await Profile.findOne({Email:Email.toLowerCase()}).select('-Password -__v -_id').populate('Post');
+            else userData = await Profile.findOne({Email:Email.toLowerCase()}).select('-Password -__v -_id -Post -Followers -Following');    
+        }
+        
+       
         if(!userData){
             return res.status(409).json({
                 success:false,

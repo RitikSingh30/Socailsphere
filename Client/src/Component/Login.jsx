@@ -22,12 +22,15 @@ export default function Login() {
       if (response?.data?.success) {
         toast.dismiss(toastId);
         toast.success(response?.data?.message);
-        navigate("/Welcome",{state:{Email:data?.EmailIdUserName}});
+        sessionStorage.setItem('token',response?.data?.token);
+        navigate("/Welcome");
       }
-    } catch (error) {
-      toast.dismiss(toastId);
-      toast.error(error?.response?.data?.message);
-    }
+      }catch (error) {
+        toast.dismiss(toastId);
+        if(error?.response?.data?.message)
+          toast.error(error?.response?.data?.message);
+        else toast.error('Internal Server error')
+      }
     toast.dismiss(toastId)
   };
 

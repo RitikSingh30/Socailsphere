@@ -14,7 +14,7 @@ export const SidebarData = [
         <path d="M16.511 16.511L22 22" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>,
         Name:"Search",
-        Navigate:'Search',
+        Navigate:'',
     },
     {
         Id:3,
@@ -41,7 +41,7 @@ export const SidebarData = [
         <path d="M12.0029 6.54492V17.4549" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>,        
         Name:"Create",
-        Navigate:'CreatePost',
+        Navigate:'',
     },
     {
         Id:6,

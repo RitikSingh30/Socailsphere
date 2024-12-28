@@ -16,6 +16,6 @@ export const showEditProfileSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { show, hide } = showEditProfileSlice.actions
+export const { show, hide } = showEditProfileSlice.actions;
 
-export default showEditProfileSlice.reducer
+export default showEditProfileSlice.reducer;

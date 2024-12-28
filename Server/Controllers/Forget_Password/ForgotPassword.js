@@ -1,7 +1,7 @@
-const Profile = require('../../Models/Profile');
-const {SendOtp} = require('../SendOtp'); 
+import Profile from '../../Models/Profile.js';
+import { SendOtp } from '../SendOtp.js';
 
-exports.forgotPassword = async function (req, res) {
+export const forgotPassword = async function (req, res) {
   try {
     const { Email } = req.body;
     if (!Email) {

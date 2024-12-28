@@ -1,5 +1,6 @@
-const mongoose = require('mongoose');
-require('dotenv').config() ;
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const ProfileSchema = new mongoose.Schema({
     UserName:{
@@ -27,6 +28,12 @@ const ProfileSchema = new mongoose.Schema({
             ref:'Post'
         }
     ],
+    SavePost:[
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:'Post'
+        }
+    ],
     Followers:[
         {
             type:mongoose.Schema.Types.ObjectId,
@@ -49,5 +56,7 @@ const ProfileSchema = new mongoose.Schema({
     }
 
 })
+
+ProfileSchema.index({UserName:1});
             
-module.exports = mongoose.model('Profile',ProfileSchema);
+export default mongoose.model('Profile', ProfileSchema);

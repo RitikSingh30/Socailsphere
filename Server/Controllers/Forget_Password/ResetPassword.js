@@ -1,7 +1,7 @@
-const Profile = require("../../Models/Profile");
-const bcrypt = require('bcrypt-nodejs');
+import Profile from "../../Models/Profile.js";
+import bcrypt from 'bcrypt-nodejs';
 
-exports.ResetPassword = async(req,res) => {
+export const ResetPassword = async(req,res) => {
     try{
         const {Email,Password,confirmPassword} = req.body; 
 

@@ -26,7 +26,9 @@ const ForgotPassword = () => {
       }
     } catch (error) {
       toast.dismiss(toastId);
-      toast.error(error?.response?.data?.message);
+      if(error?.response?.data?.message)
+        toast.error(error?.response?.data?.message);
+      else toast.error('Internal Server error')
     }
     toast.dismiss(toastId);
   };

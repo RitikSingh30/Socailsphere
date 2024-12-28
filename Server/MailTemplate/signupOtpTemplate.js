@@ -1,4 +1,4 @@
-exports.signupOtpTemplate = function(OTP){
+export const signupOtpTemplate = function(OTP){
     const mailBody = `
         <div style="font-family: Helvetica,Arial,sans-serif;min-width:1000px;overflow:auto;line-height:2">
         <div style="margin:50px auto;width:70%;padding:20px 0">

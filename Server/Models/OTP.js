@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const OTPItemSchema = new mongoose.Schema({
   code: {
@@ -21,4 +21,4 @@ const OTPSchema = new mongoose.Schema({
     OTP:[OTPItemSchema]
 })
 
-module.exports = mongoose.model('Otp',OTPSchema);
+export default mongoose.model('Otp',OTPSchema);

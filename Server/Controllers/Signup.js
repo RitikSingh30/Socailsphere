@@ -1,9 +1,9 @@
-const Profile = require('../Models/Profile');
-const bcrypt = require('bcrypt-nodejs');
-const Otp = require('../Models/OTP');
-const { SendOtp } = require('./SendOtp');
+import Profile from '../Models/Profile.js';
+import bcrypt from 'bcrypt-nodejs';
+import Otp from '../Models/OTP.js';
+import { SendOtp } from './SendOtp.js';
 
-exports.singupVerification = async function(req,res){
+export const singupVerification = async function(req,res){
     try{
         const {Email,UserName} = req.body ;
 
@@ -53,7 +53,7 @@ exports.singupVerification = async function(req,res){
 
 
 
-exports.singup = async function(req,res){
+export const singup = async function(req,res){
     try{
         const {Email,FullName,Password,UserName,otp} = req.body;
 
@@ -83,9 +83,15 @@ exports.singup = async function(req,res){
         const userDoc = new Profile({Email:Email.toLowerCase(),FullName,Password:hashPassword,UserName:UserName.toLowerCase()});
         await userDoc.save();
 
+        // Creating JWT Token 
+        const token = jwt.sign({Email: userDoc.Email}, process.env.JWT_SECRET_KEY, {
+            expiresIn: '7d',
+        })
+
         return res.status(200).json({
             success:true,
-            message:'Signup Successfull, Welcome!!'
+            message:'Signup Successfull, Welcome!!',
+            token
         });
     }catch(error){
         return res.status(500).json({

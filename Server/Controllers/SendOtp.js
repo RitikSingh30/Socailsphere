@@ -1,9 +1,9 @@
-const otpGenerator = require('otp-generator');
-const { SignupOtp } = require('../Helper/SignupOtp');
-const { signupOtpTemplate } = require('../MailTemplate/signupOtpTemplate');
-const { saveOtp } = require('../Helper/SaveOtp');
+import otpGenerator from 'otp-generator';
+import { SignupOtp } from '../Helper/SignupOtp.js';
+import { signupOtpTemplate } from '../MailTemplate/signupOtpTemplate.js';
+import { saveOtp } from '../Helper/SaveOtp.js';
 
-exports.SendOtp = async function(req,res){
+export const SendOtp = async function(req,res){
     try{
         const {Email} = req.body ;
         const OTP = otpGenerator.generate(6, { upperCaseAlphabets: false, specialChars: false ,lowerCaseAlphabets: false});

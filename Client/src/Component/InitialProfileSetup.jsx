@@ -6,7 +6,7 @@ import { UPDATE_USER_PROFILE_INFO } from '../API_Endpoint/UpdateUserProfile';
 import { RxCross2 } from "react-icons/rx";
 import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
-import { hide } from '../Slices/showEditProfileSlice';
+import { hide } from '../Slices/ShowEditProfileSlice';
 
 export const InitialProfileSetup = ({userCompleteData,Email,setUserCompleteData}) => {
     const dispatch = useDispatch();
@@ -50,8 +50,13 @@ export const InitialProfileSetup = ({userCompleteData,Email,setUserCompleteData}
             if(selectedFile){
                 data.File = await convertBase64(selectedFile);
             }
-    
-            const response = await axios.post(UPDATE_USER_PROFILE_INFO,data);
+            
+            const token = sessionStorage.getItem('token');
+            const response = await axios.post(UPDATE_USER_PROFILE_INFO,data,{
+                headers :{
+                    Authorization: `Bearer ${token}`
+                }
+            });
             if(response?.data?.success){
                 toast.dismiss(toastId);
                 setUserCompleteData(response?.data?.userData);
@@ -60,7 +65,9 @@ export const InitialProfileSetup = ({userCompleteData,Email,setUserCompleteData}
 
         }catch(error){
             toast.dismiss(toastId);
-            toast.error(error?.response?.data?.message);
+            if(error?.response?.data?.message)
+                toast.error(error?.response?.data?.message);
+            else toast.error('Internal Server error')
         }
         toast.dismiss(toastId)
     }

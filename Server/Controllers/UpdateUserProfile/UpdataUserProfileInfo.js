@@ -1,9 +1,10 @@
-const Cloudinary = require("../../Utiles/Cloudinary");
-const Profile = require("../../Models/Profile");
+import { cloudinaryUpload } from "../../Utiles/Cloudinary.js";
+import Profile from "../../Models/Profile.js";
 
-exports.updateUserProfileInfo = async(req,res) => {
+export const updateUserProfileInfo = async(req,res) => {
+    let fileUrl = null ;
     try{
-        const {Email} = req.body ;
+        const {Email} = req ;
 
         if(!Email){
             return res.status(409).json({
@@ -21,8 +22,8 @@ exports.updateUserProfileInfo = async(req,res) => {
         if(FullName) update.FullName = FullName ;
 
         if(File){
-            const fileUrl = await Cloudinary(File);
-            update.ProfilePicture = fileUrl ; 
+            fileUrl = await cloudinaryUpload(File);
+            update.ProfilePicture = fileUrl.secure_url ; 
         }
 
         const updateUser = await Profile.findOneAndUpdate({Email},{$set:update},{new:true, upsert: true}).select('-Password -__v -_id');
@@ -33,6 +34,12 @@ exports.updateUserProfileInfo = async(req,res) => {
         })
     }catch(error){
         console.log(error)
+
+        // If any operation fails, delete the uploaded file from cloudinary 
+        if(fileUrl && fileUrl.public_id){
+            await cloudinaryDelete(fileUrl.public_id);
+        }
+
         return res.status(500).json({
             success:false,
             message:'Internal Server Error'

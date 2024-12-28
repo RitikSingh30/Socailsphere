@@ -20,19 +20,22 @@ export const Otp = () => {
 
     const onsubmit = async(data) => {
       const toastId = toast.loading('Loading...');
-        try{
-            userData.otp = data.otp ;
-            const response = await axios.post(SIGNUP_URL,userData);
-            if(response?.data?.success){
-              toast.dismiss(toastId);
-              toast.success(response?.data?.message);
-              navigate('/Welcome',{state:{Email:userData?.Email,showInitialProfileSetup:true}});
-            }
-          }catch(error){
-            toast.dismiss(toastId);
+      try{
+        userData.otp = data.otp ;
+        const response = await axios.post(SIGNUP_URL,userData);
+        if(response?.data?.success){
+          toast.dismiss(toastId);
+          toast.success(response?.data?.message);
+          sessionStorage.setItem('token',response?.data?.token);
+          navigate('/Welcome',{state:{showInitialProfileSetup:true}});
+        }
+        }catch(error){
+          toast.dismiss(toastId);
+          if(error?.response?.data?.message)
             toast.error(error?.response?.data?.message);
-          }
-        toast.dismiss(toastId);
+          else toast.error('Internal Server error')
+        }
+      toast.dismiss(toastId);
     }
 
     const sendOtpAgain = async() => {
@@ -45,7 +48,9 @@ export const Otp = () => {
         }
         }catch(error){
           toast.dismiss(toastId);
-          toast.error(error?.response?.data?.message);
+          if(error?.response?.data?.message)
+            toast.error(error?.response?.data?.message);
+          else toast.error('Internal Server error')
         }
       toast.dismiss(toastId);
     }

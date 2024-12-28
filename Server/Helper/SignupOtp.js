@@ -1,6 +1,6 @@
-const { sendMail } = require("../Utiles/MailSender")
+import { sendMail } from "../Utiles/MailSender.js";
 
-exports.SignupOtp = async({to,mailBody}) => {
+export const SignupOtp = async({to,mailBody}) => {
     const subject = "Sign up OTP";
     const params = {to,subject,mailBody};
     
